@@ -18,6 +18,37 @@ npm start
 ```
 Then navigate to http://localhost:3000 in your browser.
 
+## Build the docker image
+```powershell
+$version="1.0.1"
+$appname="samphamplayeconomyacr"
+docker build -t "$appname.azurecr.io/play.frontend:$version" .
+```
+
+## Run the docker image
+```powershell
+docker run -it --rm -p 3000:80 --name frontend "$appname.azurecr.io/play.frontend:$version"
+```
+
+## Publish the docker image
+```powershell
+az acr login --name $appname
+docker push "$appname.azurecr.io/play.frontend:$version"
+```
+
+## Install the Helm chart
+```powershell
+$namespace="frontend"
+helm install frontend-client ./helm --create-namespace -n $namespace
+
+kubectl get pods -n $namespace (check your result in pod)
+
+name our frontend is frontend-client
+
+The reason why we need helm for FE project is that this (folder helm) contains the helm chart to deploy the docker image into the Kubernetes cluster.
+So you remember we have been using helm charts before, but this time we have created one specifically for deploying the FE.
+```
+
 ## Available Scripts
 
 In the project directory, you can run:
