@@ -23,6 +23,10 @@ Then navigate to http://localhost:3000 in your browser.
 $version="1.0.1"
 $appname="samphamplayeconomyacr"
 docker build -t "$appname.azurecr.io/play.frontend:$version" .
+
+or 
+
+docker build -t "play.frontend:$version" .
 ```
 
 ## Run the docker image
@@ -40,6 +44,10 @@ docker push "$appname.azurecr.io/play.frontend:$version"
 ```powershell
 $namespace="frontend"
 helm install frontend-client ./helm --create-namespace -n $namespace
+
+or
+
+helm install frontend-client ./helm-local --create-namespace -n $namespace
 
 kubectl get pods -n $namespace (check your result in pod)
 
